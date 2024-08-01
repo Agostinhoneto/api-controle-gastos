@@ -21,14 +21,17 @@ Route::get('/', function () {
 
 //Login 
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('users', UserController::class);
+Route::group(['middleware' =>['auth:sanctum']],function () {
+// Route::apiResource('users', UserController::class);
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
 });
 
 //Users.
+/*
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
 Route::get('/users/show/{id}', [UserController::class, 'show'])->name('users.show');
@@ -48,3 +51,4 @@ Route::post('/despesas/store',[DespesasController::class,'store'])->name('tags.s
 Route::get('/despesas/show/{id}', [DespesasController::class, 'show'])->name('tags.show');
 Route::put('/despesas/update/{id}', [DespesasController::class, 'update'])->name('tags.update');
 Route::delete('/despesas/destroy/{id}', [DespesasController::class, 'destroy'])->name('tags.destroy');
+*/
